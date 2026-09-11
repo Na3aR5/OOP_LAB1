@@ -1,0 +1,8 @@
+#include <mainres.h>
+
+IDR_MAIN_MENU MENU
+BEGIN
+	MENUITEM "&Work1", IDM_WORK_1
+	MENUITEM "&Work2", IDM_WORK_2
+	MENUITEM "&Exit",  IDM_EXIT
+END
