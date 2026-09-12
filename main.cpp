@@ -1,6 +1,3 @@
-// B1 = 3
-// B2 = 0
-
 #include <string>
 
 #include <mainres.h>
@@ -54,6 +51,7 @@ namespace {
 		windowClass.hInstance     = hInstance;
 		windowClass.lpszClassName = LAB_WINDOW_CLASSNAME.data();
 		windowClass.lpfnWndProc   = WndProc;
+		windowClass.hbrBackground = CreateSolidBrush(RGB(255, 255, 255));
 
 		return RegisterClassExA(&windowClass);
 	}
@@ -93,7 +91,9 @@ namespace {
 						lab::ModuleWork1(hwnd, &state->workResultPayload1);
 						state->shouldExecuteWorkResult1 = true;
 
-						InvalidateRect(hwnd, nullptr, TRUE);
+						if (state->workResultPayload1.wasChosen && std::strlen(state->workResultPayload1.result) > 0) {
+							InvalidateRect(hwnd, nullptr, TRUE);
+						}
 
 						break;
 					}
@@ -103,7 +103,9 @@ namespace {
 						lab::ModuleWork2(hwnd, &state->workResultPayload2);
 						state->shouldExecuteWorkResult2 = true;
 
-						InvalidateRect(hwnd, nullptr, TRUE);
+						if (!state->workResultPayload2.written.empty()) {
+							InvalidateRect(hwnd, nullptr, TRUE);
+						}
 
 						break;
 					}
@@ -120,13 +122,15 @@ namespace {
 
 				State* state = (State*)GetWindowLongPtrA(hwnd, GWLP_USERDATA);
 
-				if (state->shouldExecuteWorkResult1 && state->workResultPayload1.wasChosen) {
+				if (state->shouldExecuteWorkResult1) {
 					std::string message = std::string("Work1: Chosen group is ") + state->workResultPayload1.result;
 					TextOutA(hdc, 200, 200, message.data(), message.length());
+					state->shouldExecuteWorkResult1 = false;
 				}
 				if (state->shouldExecuteWorkResult2) {
 					std::string message = std::string("Work2: Entered text is \"") + state->workResultPayload2.written + "\"";
 					TextOutA(hdc, 200, 200, message.data(), message.length());
+					state->shouldExecuteWorkResult2 = false;
 				}
 
 				EndPaint(hwnd, &ps);

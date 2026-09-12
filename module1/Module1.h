@@ -8,7 +8,6 @@ namespace lab {
 		bool wasChosen;
 		char result[16];
 	};
-
 	int ModuleWork1(HWND hwnd, ModuleWorkResult1* result);
 } // namespace lab
 #endif // !LAB1_MODULE1_HEADER

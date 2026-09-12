@@ -19,7 +19,7 @@ int lab::ModuleWork2(HWND hwnd, ModuleWorkResult2* result) {
 	DialogBoxParamA(
 		GetModuleHandleA(nullptr),
 		MAKEINTRESOURCEA(IDR_MODULE2_DIALOG),
-		nullptr,
+		hwnd,
 		CallbackWork2,
 		(LPARAM)&dialogResult
 	);
