@@ -10,9 +10,6 @@ int WINAPI wWinMain(
 	_In_ PWSTR pCmdLine,
 	_In_ int nCmdShow)
 {
-	/*AllocConsole();
-	(void)freopen("CONOUT$", "w", stdout);*/
-
 	lab::EventSystem eventSystem{};
 
 	lab::WindowCreateInfo windowCreateInfo = {};
